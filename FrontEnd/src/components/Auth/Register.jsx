@@ -1,8 +1,7 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Box, Button, Input, VStack, useToast } from '@chakra-ui/react';
-import { AuthContext } from '../../context/AuthContext';
 
 const Register = () => {
   const [name, setName] = useState('');
@@ -41,30 +40,32 @@ const Register = () => {
 
   return (
     <Box>
-      <form onSubmit={handleSubmit}>
-        <VStack spacing={4}>
-          <Input
-            placeholder="Name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-          <Input
-            placeholder="Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            type="email"
-          />
-          <Input
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            type="password"
-          />
-          <Button type="submit" colorScheme="teal">
-            Register
-          </Button>
-        </VStack>
-      </form>
+      <Box mt="100px" mx="auto" width={["90%", "70%", "50%", "40%"]} boxShadow="lg" p={8} borderRadius="md" bg="white">
+        <form onSubmit={handleSubmit}>
+          <VStack spacing={4}>
+            <Input
+              placeholder="Name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+            <Input
+              placeholder="Email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              type="email"
+            />
+            <Input
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              type="password"
+            />
+            <Button type="submit" colorScheme="teal">
+              Register
+            </Button>
+          </VStack>
+        </form>
+      </Box>
     </Box>
   );
 };

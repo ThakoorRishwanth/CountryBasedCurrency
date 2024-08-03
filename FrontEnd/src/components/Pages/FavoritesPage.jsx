@@ -1,21 +1,19 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { SimpleGrid, Flex } from '@chakra-ui/react';
-import axios from 'axios';
 import CountryCard from '../Country/CountryCard';
 import { AuthContext } from '../../context/AuthContext';
 
 const FavoritesPage = () => {
   const [favorites, setFavorites] = useState([]);
-  const { user, getAuthHeaders } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
 
-  const fetchFavorites = async () => {
-    if (!user) return;
-    try {
-      const { data } = await axios.get('https://countrybasedcurrency.onrender.com/api/favorites', getAuthHeaders());
-      setFavorites(data);
-    } catch (error) {
-      console.error('Error fetching favorites', error);
-    }
+  const fetchFavorites = () => {
+    const storedFavorites = JSON.parse(localStorage.getItem('favorites')) || [];
+    setFavorites(storedFavorites);
+  };
+
+  const handleRemove = (country) => {
+    setFavorites(prevFavorites => prevFavorites.filter(fav => fav.name !== country.name));
   };
 
   useEffect(() => {
@@ -25,8 +23,14 @@ const FavoritesPage = () => {
   return (
     <Flex direction="column" align="center" p={4} flex="1">
       <SimpleGrid columns={[1, 2, 3]} spacing={4} width="full">
-        {favorites.map((country) => (
-          <CountryCard key={country.name} country={country} />
+        {favorites.map((country, index) => (
+          <CountryCard 
+            key={index} 
+            country={country} 
+            showFavoriteButton={false} 
+            showRemoveButton={true} 
+            onRemove={handleRemove} 
+          />
         ))}
       </SimpleGrid>
     </Flex>
