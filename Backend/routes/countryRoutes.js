@@ -1,9 +1,10 @@
 const express = require('express');
-const { getCountryByCurrency } = require('../controllers/CountryController');
-
+const { getAllCountries, getCountryByCurrency } = require('../controllers/countryController');
+const { protect } = require('../middlewares/authMiddleware');
 
 const router = express.Router();
 
-router.get('/:currency', getCountryByCurrency);
+router.get('/', getAllCountries);
+router.get('/:currencyCode', getCountryByCurrency);
 
 module.exports = router;
