@@ -40,7 +40,7 @@ const CountryCard = ({ country, onFavorite }) => {
         <Text fontWeight="bold" fontSize="xl">{country.name}</Text>
         <Text>Capital: {country.capital}</Text>
         <Text>Currency: {country.currency}</Text>
-        <Text>Languages: {country.languages.join(', ')}</Text>
+        <Text>Languages: {country.languages}</Text>
         {user && (
           <Button colorScheme="teal" mt="4" onClick={handleFavorite}>
             Add to Favorites

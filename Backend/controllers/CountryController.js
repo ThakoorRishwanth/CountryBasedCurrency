@@ -1,5 +1,10 @@
 const axios = require('axios');
 
+// Helper function to convert languages object to array
+const formatLanguages = (languages) => {
+  return languages ? Object.values(languages).join(', ') : 'N/A';
+};
+
 // Controller to fetch all countries
 const getAllCountries = async (req, res) => {
   try {
@@ -8,7 +13,7 @@ const getAllCountries = async (req, res) => {
       name: country.name.common,
       capital: country.capital ? country.capital[0] : 'N/A',
       currency: Object.keys(country.currencies || {}).join(', '),
-      languages: Object.values(country.languages || {}).join(', '),
+      languages: formatLanguages(country.languages),
       flag: country.flags.svg
     })));
   } catch (error) {
@@ -25,7 +30,7 @@ const getCountryByCurrency = async (req, res) => {
       name: country.name.common,
       capital: country.capital ? country.capital[0] : 'N/A',
       currency: Object.keys(country.currencies || {}).join(', '),
-      languages: Object.values(country.languages || {}).join(', '),
+      languages: formatLanguages(country.languages),
       flag: country.flags.svg
     })));
   } catch (error) {

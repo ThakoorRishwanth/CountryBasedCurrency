@@ -1,13 +1,14 @@
 import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { Box, Button, Input, VStack } from '@chakra-ui/react';
+import { Box, Button, Input, VStack, useToast } from '@chakra-ui/react';
 import { AuthContext } from '../../context/AuthContext';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const { login } = useContext(AuthContext);
+  const toast = useToast();
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -19,8 +20,22 @@ const Login = () => {
       });
       login(data);
       navigate('/');
+      toast({
+        title: 'Login successful.',
+        description: 'You have been logged in.',
+        status: 'success',
+        duration: 3000,
+        isClosable: true,
+      });
     } catch (error) {
       console.error('Login error', error);
+      toast({
+        title: 'Error occurred.',
+        description: 'Could not log in.',
+        status: 'error',
+        duration: 3000,
+        isClosable: true,
+      });
     }
   };
 

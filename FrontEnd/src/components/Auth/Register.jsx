@@ -1,12 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { Box, Button, Input, VStack } from '@chakra-ui/react';
+import { Box, Button, Input, VStack, useToast } from '@chakra-ui/react';
+import { AuthContext } from '../../context/AuthContext';
 
 const Register = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const toast = useToast();
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -18,8 +20,22 @@ const Register = () => {
         password,
       });
       navigate('/login');
+      toast({
+        title: 'Registration successful.',
+        description: 'You can now log in.',
+        status: 'success',
+        duration: 3000,
+        isClosable: true,
+      });
     } catch (error) {
       console.error('Register error', error);
+      toast({
+        title: 'Error occurred.',
+        description: 'Could not register.',
+        status: 'error',
+        duration: 3000,
+        isClosable: true,
+      });
     }
   };
 
